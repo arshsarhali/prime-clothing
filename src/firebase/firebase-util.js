@@ -1,0 +1,32 @@
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import 'firebase/compat/auth';
+
+const config ={
+
+    apiKey: "AIzaSyCCsIxEoJp7kfUcXt3oXu3ihUIm6cIuv6s",
+
+    authDomain: "prime-db-c0a2e.firebaseapp.com",
+
+    projectId: "prime-db-c0a2e",
+
+    storageBucket: "prime-db-c0a2e.appspot.com",
+
+    messagingSenderId: "531853449899",
+
+    appId: "1:531853449899:web:ba8b97cfa1fcab47c235ee",
+
+    measurementId: "G-302GPBN5TK"
+
+};
+  
+firebase.initializeApp(config);
+
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+const provider = new firebase.auth.GoogleAuthProvider();
+
+export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+export default firebase;
