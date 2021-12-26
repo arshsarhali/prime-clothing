@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import HomePage from './pages/homepage/homepage';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route,Redirect } from 'react-router-dom';
 import ShopPage from './pages/shop/shop.jsx';
 import Header from './components/header/header';
 import Signin from './pages/Sign-in-and-up/signinandup';
@@ -51,16 +51,20 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/shop' component={ShopPage} />
-          <Route exact path='/signin' component={Signin} />
+          <Route exact path='/signin' render={()=>this.props.currentUser ? (<Redirect to='/'/>) : (<Signin />) } />
         </Switch>
       </div>
     );
   }
 }
 
+const mapStateToProps = ({ user }) => ({
+  currentUser:user.currentUser
+})
+
 const mapDispatchToProps = dispatch => ({
 setCurrentUser: user =>dispatch(setCurrentUser(user))
 
 })
 
-export default connect(null,mapDispatchToProps) (App);
+export default connect(mapStateToProps,mapDispatchToProps) (App);
