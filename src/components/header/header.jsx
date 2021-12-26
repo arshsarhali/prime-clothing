@@ -2,19 +2,20 @@ import './header.scss';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/prime.svg'; 
 import { auth } from '../../firebase/firebase-util';
+import { connect } from 'react-redux';
 
 
-const Header = ({ currentUser}) => (
+const Header = ({ currentUser }) => (
     <div className='header'>
         <Link className='logocontainer' to="/">
-        <Logo/>
+            <Logo />
         </Link>
         <div className='options'>
             <Link className='option' to='/shop'>
-            SHOP
+                SHOP
             </Link>
             <Link className='option' to='/contact'>
-            CONTACT
+                CONTACT
             </Link>
             {
                 currentUser ?
@@ -24,6 +25,11 @@ const Header = ({ currentUser}) => (
             }
         </div>
     </div>
-)
+);
 
-export default Header;
+const mapStateToProps = state => ({
+currentUser:state.user.currentUser
+
+});
+
+export default connect(mapStateToProps)(Header);
