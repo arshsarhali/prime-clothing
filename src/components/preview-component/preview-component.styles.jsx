@@ -9,6 +9,8 @@ margin-bottom: 30px;
 export const TitleContainer = styled.h1`
 font-size: 28px;
 margin-bottom: 25px;
+cursor:pointer;
+max-width:150px;
 ` ;
 
 export const PreviewContainer = styled.div`
