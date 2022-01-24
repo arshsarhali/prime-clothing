@@ -11,6 +11,11 @@ button{
     margin-left: auto;
     margin-top: 50px;
   }
+
+  @media screen and (max-width:800px){
+    margin: 10px;
+    width: 90%;
+    }
 `;
 
 export const CheckoutHeaderContainer = styled.div`

@@ -46,6 +46,9 @@ cursor: pointer;
   &:last-child {
     margin-left: 7.5px;
   }
+  @media screen and (max-width:800px){
+    height:200px;
+}
 `; 
 
 export const BackgroundImageContainer = styled.div`
@@ -74,9 +77,16 @@ font-weight: bold;
 margin-bottom: 6px;
 font-size: 22px;
 color: #4a4a4a;
+
+@media screen and (max-width:800px){
+font-size: 15px;
+}
 `;
 
 export const SubtitleContainer = styled.span`
 font-weight: lighter;
 font-size: 16px;
+@media screen and (max-width:800px){
+    font-size: 12px;
+    }
 `;

@@ -17,6 +17,19 @@ position:relative;
         display: flex;
     }
 }
+
+@media screen and (max-width:800px){
+    width:40vw;
+    &:hover{
+        .image{
+            opacity: unset;
+        }
+    
+        button{
+            opacity: unset;
+        }
+    }
+}
 ` ;
 
 export const ImageContainer = styled.div`    width: 100%;
@@ -29,7 +42,14 @@ background-image: ${({ imageUrl }) => `url(${imageUrl})`};`;
 export const CustomButtonContainer =styled(CustomButton)`    width: 80%;
 position: absolute;
 top: 255px;
-display: none;` ;
+display: none;
+@media screen and (max-width:800px){
+display:block;
+opacity:0.9;
+min-width:unset;
+padding:0 5px;
+}
+` ;
 
 export const CollectionFotterContainer = styled.div`  width: 100%;
 height: 5%;

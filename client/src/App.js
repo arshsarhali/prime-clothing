@@ -1,16 +1,23 @@
-import React, { useEffect} from 'react';
-import './App.css';
-import HomePage from './pages/homepage/homepage';
-import { Switch, Route,Redirect } from 'react-router-dom';
-import ShopPage from './pages/shop/shop.jsx';
+import React, { useEffect, lazy, Suspense } from 'react';
+
+import { GlobalStyle } from './global.styles';
+
+import { Switch, Route, Redirect } from 'react-router-dom';
+
 import Header from './components/header/header';
-import CheckoutPage from './pages/checkout/checkout';
-import Signin from './pages/Sign-in-and-up/signinandup';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { checkUserSession } from './redux/user/user.actions';
 
+import Spinner from './components/spinner/spinner';
+import ErrorBoundry from './components/error-boundary/error-boundry';
 
+
+const HomePage = lazy(() => import('./pages/homepage/homepage'))
+const ShopPage = lazy(() => import('./pages/shop/shop'))
+const Signin = lazy(() => import('./pages/Sign-in-and-up/signinandup'))
+const CheckoutPage = lazy(() => import('./pages/checkout/checkout'))
 
 
 const App = ()=> {
@@ -28,17 +35,19 @@ const App = ()=> {
   
     return (
       <div>
+        <GlobalStyle/>
         <Header />
         <Switch>
-          <Route exact path='/' component={HomePage} />
+          <ErrorBoundry> 
+          <Suspense fallback={<Spinner/>}>
+            <Route exact path='/' component={HomePage} />
+        
           <Route path='/shop' component={ShopPage} />
           <Route exact path='/checkout' component={CheckoutPage} />
 
-          
-
-
-
           <Route exact path='/signin' render={()=>currentUser ? (<Redirect to='/'/>) : (<Signin />) } />
+            </Suspense>
+            </ErrorBoundry>
         </Switch>
       </div>
     );
