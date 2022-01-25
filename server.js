@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const { dirname } = require('path');
 
 if (process.env.NODE_ENV !== 'production') require('dotenv').config();
 
@@ -29,6 +30,11 @@ app.listen(port, error => {
     console.log('server running on port' + port);
 
 })
+
+app.get('/service-worker.js', (req, res) => {
+    
+res.sendFile(path.resolve(--dirname,'..','build','service-worker.js'))
+});
 
 app.post('/payment', (req, res) => {
     const body = {
