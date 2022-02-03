@@ -5,7 +5,7 @@ import { auth, googleProvider, createUserProfileDocument, getCurrentUser } from 
 import { signInSucess,  signInFailure, signOutSuccess, signOutFailure, signUpSuccess, signUpFailure } from './user.actions';
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
-    
+   
 try{
     const userRef = yield call(createUserProfileDocument, userAuth, additionalData);
         const userSnapshot = yield userRef.get();
@@ -80,7 +80,7 @@ export function* onSignOutStart() {
 export function* signUp({ payload: {email,password,displayName } }) {
     try {
         const user = yield auth.createUserWithEmailAndPassword(email, password)
-        yield put(signUpSuccess(user,displayName))
+        yield put(signUpSuccess({ user, displayName }))
     } catch (error) {
         yield put(signUpFailure(error))
     }
@@ -92,8 +92,9 @@ export function* onSignUpStart() {
     yield takeLatest(UserActionTypes.SIGN_UP_START, signUp)
 }
 
-export function* signInafterSignUp({ payload: {user, displayName:additionalData } }) {
-    yield getSnapshotFromUserAuth(user, additionalData)
+export function* signInafterSignUp({ payload: { user, displayName } }) {
+
+    yield getSnapshotFromUserAuth(user.user, {displayName: displayName }  )
 
 }
 
