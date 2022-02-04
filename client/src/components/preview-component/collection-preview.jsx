@@ -1,13 +1,15 @@
 
-import { withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import CollectionItem from '../collection-item/collection-item';
 import { CollectionPreviewContainer, TitleContainer, PreviewContainer } from './preview-component.styles';
 
-const CollectionPreview = ({ title, items, routeName, history, match }) => 
-  (
+const CollectionPreview = ({ title, items, routeName }) => {
+
+    const navigate = useNavigate();
+    return (
         <CollectionPreviewContainer>
-            <TitleContainer onClick={() => history.push(`${match.url}/${routeName}`)} >{title.toUpperCase()}</TitleContainer>
+            <TitleContainer onClick={() =>navigate(`${routeName}`)} >{title.toUpperCase()}</TitleContainer>
         
             <PreviewContainer>
                 {
@@ -22,5 +24,6 @@ const CollectionPreview = ({ title, items, routeName, history, match }) =>
         </CollectionPreviewContainer>
 
     )
+}
 
-export default withRouter(CollectionPreview);
+export default CollectionPreview;

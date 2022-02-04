@@ -2,7 +2,7 @@ import React, { useEffect, lazy, Suspense } from 'react';
 
 import { GlobalStyle } from './global.styles';
 
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Header from './components/header/header';
 
@@ -12,7 +12,6 @@ import { checkUserSession } from './redux/user/user.actions';
 
 import Spinner from './components/spinner/spinner';
 import ErrorBoundry from './components/error-boundary/error-boundry';
-
 
 const HomePage = lazy(() => import('./pages/homepage/homepage'))
 const ShopPage = lazy(() => import('./pages/shop/shop'))
@@ -37,18 +36,32 @@ const App = ()=> {
       <div>
         <GlobalStyle/>
         <Header />
-        <Switch>
-          <ErrorBoundry> 
-          <Suspense fallback={<Spinner/>}>
-            <Route exact path='/' component={HomePage} />
+        <ErrorBoundry> 
+        <Suspense fallback={<Spinner/>}>
+        <Routes>
+         
+              <Route path='/' element={<HomePage />} />
         
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
+          <Route path='shop/*' element={<ShopPage/>} />
+              <Route path='checkout' element={<CheckoutPage />} />
+             
 
-          <Route exact path='/signin' render={()=>currentUser ? (<Redirect to='/'/>) : (<Signin />) } />
+
+              {
+                currentUser ?
+                <Route path='signin' element={<Navigate replace to='/' />} />
+                  :
+                  <Route path='signin' element={<Signin />} />
+
+              }
+
+      
+            
+
+            
+            </Routes>
             </Suspense>
             </ErrorBoundry>
-        </Switch>
       </div>
     );
   }

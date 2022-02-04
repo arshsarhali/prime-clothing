@@ -3,14 +3,15 @@
 import CartItem from '../cart-item/cart-item';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCartItems } from '../../redux/cart/cart-selectors';
-import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';
 
 import { CustomButtonContainer,CartDropDownContainer,CartItemContainer,EmptyMessage} from './cart-dropdown.styles';
 
-const CartDropDown = ({  history}) => {
+const CartDropDown = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector(selectCartItems)
+    const navigate = useNavigate();
     return (
         <CartDropDownContainer>
             <CartItemContainer>
@@ -24,7 +25,7 @@ const CartDropDown = ({  history}) => {
                 }
             </CartItemContainer>
             <CustomButtonContainer onClick={() => {
-                history.push('/checkout');
+                navigate('/checkout');
                 dispatch(toggleCartHidden())
             }}>CHECKOUT</CustomButtonContainer>
         </CartDropDownContainer>
@@ -32,4 +33,4 @@ const CartDropDown = ({  history}) => {
 }
 
 
-export default withRouter(CartDropDown);
+export default CartDropDown;
